@@ -1,0 +1,31 @@
+package garajes.java;
+
+
+import exepciones.java.GarajeNoEncontrado;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class RedGarajes {
+    private final List<Garaje> garajes;
+
+    public RedGarajes() {
+        this.garajes = new ArrayList<>();
+    }
+
+    public void agregarGaraje(Garaje garaje) {
+        garajes.add(garaje);
+    }
+
+    public Garaje buscarGaraje(String nombre) throws GarajeNoEncontrado {
+        return garajes.stream()
+                .filter(g -> g.getNombre().equals(nombre))
+                .findFirst()
+                .orElseThrow(() -> new GarajeNoEncontrado("Garaje no encontrado."));
+    }
+
+    public void eliminarGaraje(String nombre) throws GarajeNoEncontrado {
+        Garaje garaje = buscarGaraje(nombre);
+        garajes.remove(garaje);
+    }
+}
