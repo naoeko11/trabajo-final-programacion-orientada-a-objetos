@@ -1,0 +1,26 @@
+package Vehiculos.java;
+
+public abstract class Vehiculo {
+    private String placa;
+
+    public Vehiculo(String placa) {
+        this.placa = placa;
+    }
+
+    public String getPlaca() {
+        return placa;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Vehiculo vehiculo = (Vehiculo) obj;
+        return placa.equals(vehiculo.placa);
+    }
+
+    @Override
+    public int hashCode() {
+        return placa.hashCode();
+    }
+}
