@@ -1,0 +1,7 @@
+package exepciones.java;
+
+public class VehiculoNoRegistrado extends Exception {
+    public VehiculoNoRegistrado(String mensaje) {
+        super(mensaje);
+    }
+}
