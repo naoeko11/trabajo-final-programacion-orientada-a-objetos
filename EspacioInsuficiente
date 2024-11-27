@@ -1,0 +1,7 @@
+package exepciones.java;
+
+public class EspacioInsuficiente extends Exception {
+    public EspacioInsuficiente(String mensaje) {
+        super(mensaje);
+    }
+}
