@@ -1,0 +1,37 @@
+package clasePrueba.java;
+
+import Vehiculos.java.Camion;
+import Vehiculos.java.Carro;
+import Vehiculos.java.Moto;
+import Vehiculos.java.Vehiculo;
+import exepciones.java.CapacidadExcedida;
+import exepciones.java.VehiculoYaRegistrado;
+import garajes.java.Garaje;
+import garajes.java.RedGarajes;
+
+public class ClasePrueba {
+    public static void main(String[] args) {
+        try {
+            RedGarajes redGarajes = new RedGarajes();
+
+            // Crear un garaje
+            Garaje garaje1 = new Garaje("Central", "Huila", "Neiva", "Calle 1", "123456", "central@example.com", "Luis", 150);
+            redGarajes.agregarGaraje(garaje1);
+
+            // Crear vehículos
+            Vehiculo carro1 = new Carro("ABC123");
+            Vehiculo moto1 = new Moto("DEF456");
+            Vehiculo camion1 = new Camion("GHI789");
+
+            // Agregar vehículos al garaje
+            garaje1.ingresarVehiculo(carro1);
+            garaje1.ingresarVehiculo(moto1);
+
+            // Mostrar ocupación del garaje
+            System.out.println("Ocupacion actual del garaje: " + garaje1.getOcupacion());
+
+        } catch (CapacidadExcedida | VehiculoYaRegistrado e) {
+            System.err.println("Error: " + e.getMessage());
+        }
+    }
+}
