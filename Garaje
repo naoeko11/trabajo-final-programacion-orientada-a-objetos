@@ -14,7 +14,7 @@ public class Garaje {
     private String departamento;
     private String ciudad;
     private String direccion;
-    private String telefono;
+    private int telefono;
     private String email;
     private String administrador;
     private int capacidadTotal;
