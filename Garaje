@@ -1,0 +1,82 @@
+package garajes.java;
+
+import Vehiculos.java.Camion;
+import Vehiculos.java.Moto;
+import Vehiculos.java.Vehiculo;
+import exepciones.java.CapacidadExcedida;
+import exepciones.java.VehiculoNoRegistrado;
+import exepciones.java.VehiculoYaRegistrado;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Garaje {
+    private final String nombre;
+    private String departamento;
+    private String ciudad;
+    private String direccion;
+    private String telefono;
+    private String email;
+    private String administrador;
+    private int capacidadTotal;
+    private List<Vehiculo> vehiculos;
+
+    public Garaje(String nombre, String departamento, String ciudad, String direccion, String telefono, String email, String administrador, int capacidadTotal) {
+        this.nombre = nombre;
+        this.departamento = departamento;
+        this.ciudad = ciudad;
+        this.direccion = direccion;
+        this.telefono = telefono;
+        this.email = email;
+        this.administrador = administrador;
+        this.capacidadTotal = capacidadTotal;
+        this.vehiculos = new ArrayList<>();
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void ingresarVehiculo(Vehiculo vehiculo) throws CapacidadExcedida, VehiculoYaRegistrado {
+        if (vehiculos.size() >= capacidadTotal) {
+            throw new CapacidadExcedida("El garaje está lleno.");
+        }
+        if (vehiculos.contains(vehiculo)) {
+            throw new VehiculoYaRegistrado("El vehículo ya está registrado en este garaje.");
+        }
+        if (vehiculo instanceof Camion && contarCamiones() >= getLimiteCamiones()) {
+            throw new CapacidadExcedida("El garaje alcanzó el límite de camiones permitido.");
+        }
+        if (vehiculo instanceof Moto && contarMotos() >= capacidadTotal * 0.2) {
+            throw new CapacidadExcedida("El garaje alcanzó el límite de motos permitido.");
+        }
+        vehiculos.add(vehiculo);
+    }
+
+    public void retirarVehiculo(String placa) throws VehiculoNoRegistrado {
+        Vehiculo vehiculo = buscarVehiculo(placa);
+        if (vehiculo == null) {
+            throw new VehiculoNoRegistrado("El vehículo no está registrado en este garaje.");
+        }
+        vehiculos.remove(vehiculo);
+    }
+
+    private Vehiculo buscarVehiculo(String placa) {
+        return vehiculos.stream().filter(v -> v.getPlaca().equals(placa)).findFirst().orElse(null);
+    }
+
+    private int contarCamiones() {
+        return (int) vehiculos.stream().filter(v -> v instanceof Camion).count();
+    }
+
+    private int contarMotos() {
+        return (int) vehiculos.stream().filter(v -> v instanceof Moto).count();
+    }
+
+    private int getLimiteCamiones() {
+        return capacidadTotal < 100 ? 10 : 20;
+    }
+
+    public int getOcupacion() {
+        return vehiculos.size();
+    }
+}
