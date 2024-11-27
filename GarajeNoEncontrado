@@ -1,0 +1,7 @@
+package exepciones.java;
+
+public class GarajeNoEncontrado extends Exception {
+    public GarajeNoEncontrado(String mensaje) {
+        super(mensaje);
+    }
+}
